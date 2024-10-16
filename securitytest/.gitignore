@@ -35,3 +35,55 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Build directories
+.gradle/
+build/
+
+# IDE directories
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Target directory
+/target/
+
+# Compiled files
+*.class
+
+# Generated files
+*.jar
+*.war
+*.ear
+
+# H2 database files
+*.db
+
+# Maven and Gradle wrappers
+/.mvn/
+.mvn/
+!**/gradlew
+!**/gradlew.bat
+!**/gradle-wrapper.jar
+
+# Other files
+.env
