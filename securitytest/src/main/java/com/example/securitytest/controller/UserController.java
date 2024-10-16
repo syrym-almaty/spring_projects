@@ -2,6 +2,7 @@ package com.example.securitytest.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // Constructor Injection
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -28,15 +29,15 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+
     @GetMapping("/{username}")
     public UserEntity getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+        // Implement method to return user by username
+        return null;
     }
 
     @PostMapping
     public UserEntity createUser(@RequestBody UserEntity user) {
-        return userService.createUser(user);
+        return userService.saveUser(user);
     }
-
-    // Additional endpoints can be added here
 }
