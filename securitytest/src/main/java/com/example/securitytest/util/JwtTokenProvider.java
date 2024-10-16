@@ -1,16 +1,17 @@
 package com.example.securitytest.util;
 
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenProvider {
@@ -20,12 +21,14 @@ public class JwtTokenProvider {
 
     private final long validityInMs = 3600000; // 1 hour
 
-    private Key getSigningKey() {
+    // Secret key to sign the JWT
+    private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Generate token
+    // Generate JWT token
+    @SuppressWarnings("deprecation")
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date now = new Date();
@@ -35,29 +38,29 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(getSigningKey())
+                .signWith(getSigningKey()) // Automatically uses HS256 since we're using the SecretKey
                 .compact();
     }
 
     // Get username from token
     public String getUsernameFromToken(String token) {
-        Jwt<Claims, Claims> jwt = Jwts.parser()
-                .verifyWith(getSigningKey())
+        Claims claims = Jwts.parser() // Changed parser() as per 0.12.6 API
+                .verifyWith(getSigningKey()) // Verifies the signature with the signing key
                 .build()
-                .parse(token);
-
-        Claims claims = jwt.getPayload();
+                .parseSignedClaims(token) // Use parseSignedClaims instead of parseClaims
+                .getPayload(); // Extract the Claims from the token
 
         return claims.getSubject();
     }
 
-    // Validate token
+    // Validate JWT token
+    @SuppressWarnings("CallToPrintStackTrace")
     public boolean validateToken(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith(getSigningKey())
+            Jwts.parser() // Create a parser for token
+                    .verifyWith(getSigningKey()) // Verifies the signature
                     .build()
-                    .parse(token);
+                    .parseSignedClaims(token); // Parse and validate the token
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             // Log token validation errors
