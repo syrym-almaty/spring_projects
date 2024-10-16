@@ -14,33 +14,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.securitytest.security.JwtAuthenticationFilter;
-import com.example.securitytest.service.CustomUserDetailsService;
 import com.example.securitytest.service.UserService;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest // Ensures the full application context is loaded
+@AutoConfigureMockMvc // Configures MockMvc for testing controllers
 public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
-
-    @MockBean
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    @MockBean
-    private CustomUserDetailsService customUserDetailsService;
+    private UserService userService; // Mock the UserService
 
     @Test
-    @WithMockUser(username = "admin", roles = "USER")
+    @WithMockUser(username = "admin", roles = "USER") // Mock authenticated user with role
     public void testGetAllUsers() throws Exception {
+        // Mock the UserService to return an empty list
         when(userService.getAllUsers()).thenReturn(Collections.emptyList());
 
+        // Perform a GET request and verify the result
         mockMvc.perform(get("/api/users"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
+                .andExpect(status().isOk()) // Expect HTTP 200 OK
+                .andExpect(jsonPath("$.length()").value(0)); // Expect the response body length to be 0
     }
 }

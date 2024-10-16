@@ -1,4 +1,4 @@
-package com.example.securitytest.payload;
+package com.example.securitytest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

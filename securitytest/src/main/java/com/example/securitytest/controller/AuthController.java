@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.securitytest.payload.LoginRequest;
-import com.example.securitytest.payload.LoginResponse;
+import com.example.securitytest.dto.LoginRequest;
+import com.example.securitytest.dto.LoginResponse;
 import com.example.securitytest.util.JwtTokenProvider;
 
 @RestController
