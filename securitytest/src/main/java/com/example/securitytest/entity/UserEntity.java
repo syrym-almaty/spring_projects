@@ -1,9 +1,10 @@
+// src/main/java/com/example/securitytest/entity/UserEntity.java
+
 package com.example.securitytest.entity;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,15 +33,9 @@ public class UserEntity {
     private String roles;
 
     // Convert roles string to GrantedAuthority list
-    public Collection<? extends GrantedAuthority> getRoles() {
-        if (roles == null || roles.isEmpty()) {
-            return Collections.emptyList();
-        }
-        String[] roleArray = roles.split(",");
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roleArray) {
-            authorities.add(new SimpleGrantedAuthority(role.trim()));
-        }
-        return authorities;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.stream(roles.split(","))
+                .map(role -> new SimpleGrantedAuthority(role.trim()))
+                .collect(Collectors.toList());
     }
 }

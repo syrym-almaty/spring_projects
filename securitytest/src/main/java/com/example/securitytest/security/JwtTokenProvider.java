@@ -1,9 +1,10 @@
-package com.example.securitytest.util;
+package com.example.securitytest.security;
 
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,11 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtTokenProvider {
 
-    // Replace with your generated Base64-encoded key
-    private final String jwtSecret = "YourGeneratedBase64EncodedSecretKey";
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
-    private final long validityInMs = 3600000; // 1 hour
+    @Value("${jwt.expirationMs}")
+    private long validityInMs; // 1 hour
 
     // Secret key to sign the JWT
     private SecretKey getSigningKey() {

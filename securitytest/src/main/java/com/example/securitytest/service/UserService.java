@@ -1,3 +1,5 @@
+// src/main/java/com/example/securitytest/service/UserService.java
+
 package com.example.securitytest.service;
 
 import java.util.List;
@@ -27,5 +29,9 @@ public class UserService {
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public UserEntity getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

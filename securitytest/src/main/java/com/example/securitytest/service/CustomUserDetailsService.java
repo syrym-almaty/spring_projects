@@ -1,3 +1,5 @@
+// src/main/java/com/example/securitytest/service/CustomUserDetailsService.java
+
 package com.example.securitytest.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +31,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles());
+                user.getAuthorities());
     }
 }

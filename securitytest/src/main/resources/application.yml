@@ -1,3 +1,8 @@
+# src/main/resources/application.yml
+
+server:
+  port: 8080
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
@@ -12,9 +17,17 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  security:
+    user:
+      name: user
+      password: password
 
 logging:
   level:
     org:
       springframework:
         security: INFO
+
+jwt:
+  secret: wMedjXRhB3mSsfzE4SNhKRzMBrAuAcM+NJpPqFCSFbY=
+  expirationMs: 3600000 # 1 hour
