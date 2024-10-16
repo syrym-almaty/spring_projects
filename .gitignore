@@ -1,0 +1,45 @@
+# Exclude IDE-specific settings
+.vscode/
+
+# Exclude target directory
+/target/
+
+# Exclude build files
+*.class
+*.jar
+*.war
+*.ear
+
+# Exclude log files
+*.log
+
+# Exclude OS-specific files
+.DS_Store
+Thumbs.db
+
+# Exclude temporary files
+*.tmp
+*.swp
+
+# Exclude IntelliJ IDEA files
+.idea/
+*.iml
+
+# Exclude Eclipse files
+.project
+.classpath
+.settings/
+
+# Exclude Maven/Gradle wrapper files
+/.mvn/
+.gradle/
+/build/
+
+# Exclude node_modules (if using frontend)
+node_modules/
+
+# Exclude H2 database files (optional)
+*.db
+
+# Exclude other unwanted files
+*.env
